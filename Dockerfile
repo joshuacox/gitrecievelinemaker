@@ -2,7 +2,6 @@ FROM debian:wheezy
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TARGETUSER YourUserNameHere
 
 #oltorf proxy
 RUN echo 'Acquire::http::Proxy "http://65.67.51.187:3142";'>>/etc/apt/apt.conf
@@ -22,7 +21,10 @@ ADD ./ssh /home/git/.ssh
 RUN chmod 700 -R /home/git/.ssh
 RUN chmod 600 -R /home/git/.ssh/id_rsa
 RUN chmod 600 -R /home/git/.ssh/id_rsa.pub
+RUN cd /usr/local ; git clone https://github.com/WebHostingCoopTeam/keys.git
+ADD config /usr/local/keys/.git/config
 
+ENV TARGETUSER ENTER_YOUR_USERNAME_HERE
 RUN chmod 755 /start.sh
 EXPOSE 80
 CMD ["/bin/bash", "/start.sh"]

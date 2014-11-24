@@ -13,13 +13,30 @@ build: builddocker beep
 
 run: rundocker beep
 
-clean: cleanvendor cleanbuilds
+clean: purge
 
+	#docker run -t gitreceivelinemaker -v ~/.ssh:/root/.ssh
 rundocker:
-	docker run -t gitreceivelinemaker
+	@docker run --name=gitreceivelinemaker -p 10080:80 \
+	  -v ~/.ssh:/tmp/.ssh \
+	  -v ~/.gitconfig:/root/.gitconfig \
+		-v /var/run/docker.sock:/run/docker.sock \
+		-v $(shell which docker):/bin/docker \
+	-t gitreceivelinemaker
 
 builddocker:
 	/usr/bin/time -v docker build -t gitreceivelinemaker .
+
+stop:
+	@echo "Stopping redmine..."
+	@docker stop gitreceivelinemaker >/dev/null
+
+purge: stop
+	@echo "Removing stopped container..."
+	@docker rm gitreceivelinemaker >/dev/null
+
+logs:
+	@docker logs -f gitreceivelinemaker
 
 beep:
 	@echo "beep"
