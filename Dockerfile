@@ -2,6 +2,7 @@ FROM debian:wheezy
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV TARGETUSER YourUserNameHere
 
 #oltorf proxy
 RUN echo 'Acquire::http::Proxy "http://65.67.51.187:3142";'>>/etc/apt/apt.conf
