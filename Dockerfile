@@ -3,10 +3,10 @@ MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-#ADD proxytest /tmp/
 # test oltorf proxy
-#RUN bash /tmp/proxytest
-RUN echo 'Acquire::http::Proxy "http://65.67.51.187:3142";'>>/etc/apt/apt.conf
+#RUN echo 'Acquire::http::Proxy "http://65.67.51.187:3142";'>>/etc/apt/apt.conf
+ADD proxytest /tmp/
+RUN bash /tmp/proxytest
 RUN apt-get -y update
 RUN apt-get -y dist-upgrade
 RUN apt-get -y install python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby1.9.1-dev ca-certificates sudo net-tools vim
